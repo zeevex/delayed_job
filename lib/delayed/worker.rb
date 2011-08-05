@@ -11,8 +11,11 @@ module Delayed
     
     # By default failed jobs are destroyed after too many attempts. If you want to keep them around
     # (perhaps to inspect the reason for the failure), set this to false.
-    cattr_accessor :destroy_failed_jobs
+    cattr_accessor :destroy_failed_jobs  
     self.destroy_failed_jobs = true
+    
+    cattr_accessor :delay_jobs
+    self.delay_jobs = true
     
     self.logger = if defined?(Merb::Logger)
       Merb.logger
