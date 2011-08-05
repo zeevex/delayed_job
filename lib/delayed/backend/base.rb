@@ -15,13 +15,16 @@ module Delayed
     
           priority = args.first || Delayed::Worker.default_priority
           run_at   = args[1]
+          options  = args[2]    || {}
           
           if Delayed::Worker.delay_jobs
-            self.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at).tap do |job|
+            self.create({:payload_object => object, 
+                         :priority => priority.to_i, 
+                         :run_at => run_at}.merge(options)).tap do |job|
               job.payload_object.on_enqueue if job.payload_object.respond_to? :on_enqueue
             end
           else
-            Delayed::Job.new(:payload_object => options[:payload_object]).tap do |job|
+            Delayed::Job.new(:payload_object => object).tap do |job|
               job.invoke_job
             end
           end
