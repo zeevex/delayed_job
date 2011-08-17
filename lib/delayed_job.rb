@@ -8,7 +8,7 @@ require File.dirname(__FILE__) + '/delayed/deserialization_error'
 require File.dirname(__FILE__) + '/delayed/railtie' if defined?(::Rails::Railtie)
 
 Object.send(:include, Delayed::MessageSending)   
-Module.send(:include, Delayed::MessageSending::ClassMethods)
+Module.send(:include, Delayed::MessageSendingClassMethods)
 
 if defined?(Merb::Plugins)
   Merb::Plugins.add_rakefiles File.dirname(__FILE__) / 'delayed' / 'tasks'
